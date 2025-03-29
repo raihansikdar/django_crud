@@ -56,13 +56,23 @@ def person_details_update(request,pk):
         
         #person_obj = PersonModel.objects.get(id=pk)
 
-        serializer = PersonSerializer(person_obj, data = data)
+        serializer = PersonSerializer(person_obj, data = data,partial = False)
         
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response(serializer.error, status = status.HTTP_400_BAD_REQUEST)
     
+    elif request.method == 'PATCH':
+        data = request.data
+        serializer = PersonSerializer(person_obj,data=data,partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.error, status = status.HTTP_400_BAD_REQUEST)
+
+
     if request.method == 'DELETE':
       #  person_obj = PersonModel.objects.get(id=pk)
         person_obj.delete()
