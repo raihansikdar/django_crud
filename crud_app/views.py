@@ -11,6 +11,7 @@ from .serializers import PersonSerializer
 def test(request):
     return Response({'message':'Hello, World!'})
 
+# ---------------------- Get Post -------------------
 
 @api_view(['GET','POST'])
 def person_details(request):
@@ -35,7 +36,7 @@ def person_details(request):
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
     
-
+# ---------------------- use pk-----------------------------
 @api_view(['GET','PUT','DELETE'])
 def person_details_update(request,pk):
     
@@ -51,7 +52,7 @@ def person_details_update(request,pk):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    if request.method == 'PUT':
+    elif request.method == 'PUT':
         data = request.data
         
         #person_obj = PersonModel.objects.get(id=pk)
